@@ -1,6 +1,6 @@
 body,
 html {
-	background-color: rgb(0, 12, 68);
+	background-color: var(--background-color);
 }
 
 body {
@@ -23,10 +23,12 @@ canvas {
 :root {
 	--primary-color:  rgb(255, 0, 140);
 	--secondary-color: rgb(37, 255, 48);
+	--background-color: rgb(0,0,0);
 	--complementary-color-1: rgb(247, 250, 73);
 	--complementary-color-2: rgb(252, 102, 16);
 	--complementary-color-3: rgb(33, 124, 243);
 	--complementary-color-4: rgb(188, 38, 214);
+	--text-color:  rgb(255, 255, 255);
 }
 
 #debug {
@@ -39,10 +41,42 @@ canvas {
 	display: block;
 }
 
-/* .audio-visualizer {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-} */
+#windows-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* pointer-events: none; */
+}
+
+.window {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    background-color: var(--background-color);
+    border: 2px solid var(--primary-color);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.window .header {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.window .header .close-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+}
+
+.window .content {
+    padding: 10px;
+    font-size: 14px;
+}

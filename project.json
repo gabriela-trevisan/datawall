@@ -21,7 +21,7 @@
 	"ratingviolence" : "none",
 	"tags" : [ "Technology" ],
 	"title" : "cisco-1.0",
-	"type" : "Web",
+	"type" : "web",
 	"version" : 1,
 	"visibility" : "private",
 	"workshopid" : "3384207010",
