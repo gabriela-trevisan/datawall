@@ -4,10 +4,15 @@ let audioCanvas = null;
 let audioCanvasCtx = null;
 
 const windowData = [
-    { title: "Janela 1", content: "Conteúdo da Janela 1" },
-    { title: "Janela 2", content: "Conteúdo da Janela 2" },
-    { title: "Janela 3", content: "Conteúdo da Janela 3" },
-    { title: "Janela 4", content: "Conteúdo da Janela 4" }
+    { title: "AUDIO", content: "Conteúdo da Janela 1" },
+    { title: "JANELA 382", content: "Conteúdo da Janela 2" },
+    { title: "Janela", content: "Conteúdo da Janela 3" },
+    { title: "Janela 382", content: "Conteúdo da Janela 4" },
+    { title: "JANELA", content: "Conteúdo da Janela 1" },
+    { title: "JANELA", content: "Conteúdo da Janela 1" },
+    { title: "JANELA", content: "Conteúdo da Janela 1" },
+    { title: "JANELA", content: "Conteúdo da Janela 1" },
+    { title: "JANELA", content: "Conteúdo da Janela 1" },
 ];
 
 window.onload = function () {
@@ -24,17 +29,18 @@ window.onload = function () {
     window.wallpaperRegisterAudioListener(wallpaperAudioListener);
 
     // Exemplo: Dividindo em 4x4 áreas com bordas da cor primária
-    drawGrid(4, 4);
+    drawGrid(5, 5);
 
      // Create the windows dynamically based on windowData array
-     createWindows(windowData);
+     createWindows(windowData, 3, 3);
 };
 
-window.onresize = function () {
-    audioCanvas.width = window.innerWidth;
-    audioCanvas.height = window.innerHeight;
-    drawGrid(4, 4); // Re-desenhar a grade ao redimensionar a janela
-};
+// window.onresize = function () {
+//     audioCanvas.width = window.innerWidth;
+//     audioCanvas.height = window.innerHeight;
+//     drawGrid(4, 4); // Re-desenhar a grade ao redimensionar a janela
+//     createWindows(windowData, 3, 3); // Recriar as janelas ao redimensionar a janela
+// };
 
 function wallpaperAudioListener(audioArray) {
     // Clear the canvas and set it to black
@@ -65,7 +71,8 @@ function wallpaperAudioListener(audioArray) {
     }
 
     // Desenhar a grade após os gráficos de áudio
-    drawGrid(3, 3); // Isso garante que a grade não será sobrescrita
+    drawGrid(5, 5); // Isso garante que a grade não será sobrescrita
+    // createGridFlexbox(4, 4);
 }
 
 function loop() {
@@ -89,7 +96,7 @@ function drawGrid(areasX, areasY) {
     const areaHeight = audioCanvas.height / areasY;
 
     // Definir estilo das bordas
-    ctx.strokeStyle = getCSSPropertyValue('--primary-color');
+    ctx.strokeStyle = getCSSPropertyValue('--text-color');
     ctx.lineWidth = 2;
 
     for (let x = 0; x < areasX; x++) {
@@ -99,19 +106,32 @@ function drawGrid(areasX, areasY) {
     }
 }
 
-function createWindows(windowsData) {
+function createGridFlexbox(areasX, areasY) {
+    const container = document.getElementById('grid-container');
+    container.style.setProperty('--cols', areasX);
+    container.style.setProperty('--rows', areasY);
+    container.innerHTML = ''; // Limpa as áreas anteriores
+
+    for (let i = 0; i < areasX * areasY; i++) {
+        const area = document.createElement('div');
+        area.classList.add('grid-area');
+        area.dataset.index = i; // Índice da área
+        container.appendChild(area);
+    }
+}
+
+function createWindows(windowsData, areasX, areasY) {
     const container = document.getElementById('windows-container');
-    const areasX = 2; // For example, dividing into 2x2 grid
-    const areasY = 2;
 
     const areaWidth = audioCanvas.width / areasX;
     const areaHeight = audioCanvas.height / areasY;
+    const spacing = parseInt(getCSSPropertyValue('--window-spacing'));
 
     windowsData.forEach((window, index) => {
         const winElement = document.createElement('div');
         winElement.classList.add('window');
-        const x = (index % areasX) * areaWidth;
-        const y = Math.floor(index / areasX) * areaHeight;
+        const x = (index % areasX) * (areaWidth + spacing);
+        const y = Math.floor(index / areasX) * (areaHeight + spacing);
         winElement.style.left = `${x}px`;
         winElement.style.top = `${y}px`;
 
